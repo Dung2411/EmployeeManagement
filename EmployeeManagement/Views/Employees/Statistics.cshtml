@@ -1,0 +1,31 @@
+﻿@model IEnumerable<EmployeeManagement.Models.EmployeeStatisticsViewModel>
+
+@{
+    ViewData["Title"] = "Employee Statistics";
+}
+
+<h2>Employee Statistics by Department</h2>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Department ID</th>
+            <th>Department Name</th>
+            <th>Total Employees</th>
+            <th>Total Male</th>
+            <th>Total Female</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.DepartmentId</td>
+                <td>@item.DepartmentName</td>
+                <td>@item.TotalEmployees</td>
+                <td>@item.TotalMale</td>
+                <td>@item.TotalFemale</td>
+            </tr>
+        }
+    </tbody>
+</table>

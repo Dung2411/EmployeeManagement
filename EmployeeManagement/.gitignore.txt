@@ -1,0 +1,13 @@
+﻿.vs/
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+TestResults/
+wwwroot/images/photos/
+*.log
+node_modules/
+*.mdf
+*.ldf

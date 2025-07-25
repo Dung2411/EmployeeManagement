@@ -1,0 +1,71 @@
+﻿@model IEnumerable<EmployeeManagement.Models.Employee>
+
+@{
+    ViewData["Title"] = "Employee List";
+    var searchValue = Context.Request.Query["searchTerm"].ToString();
+}
+
+<h1 class="mb-3">Employee List</h1>
+
+<!-- 🔍 Search Form -->
+<form asp-action="Index" method="get" class="mb-4">
+    <div class="input-group">
+        <input type="text" name="searchTerm" class="form-control" placeholder="Search by name or phone" value="@searchValue" />
+        <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+</form>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Create New Employee</a>
+</p>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-warning">No employee found.</div>
+}
+else
+{
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Name</th>
+                <th>Gender</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Photo</th>
+                <th>Department</th>
+                <th style="width: 150px;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.EmployeeName</td>
+                    <td>
+                        @(item.Gender == true ? "Male" :
+                            item.Gender == false ? "Female" : "Unknown")
+                    </td>
+                    <td>@item.Email</td>
+                    <td>@item.Phone</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(item.PhotoImagePath))
+                        {
+                            <img src="@item.PhotoImagePath" alt="Photo" width="80" height="80" class="img-thumbnail" />
+                        }
+                        else
+                        {
+                            <span>No image</span>
+                        }
+                    </td>
+                    <td>@item.Department?.DepartmentName</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.EmployeeId" class="btn btn-sm btn-primary">Edit</a>
+                        <a asp-action="Details" asp-route-id="@item.EmployeeId" class="btn btn-sm btn-info">Details</a>
+                        <a asp-action="Delete" asp-route-id="@item.EmployeeId" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

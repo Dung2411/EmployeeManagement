@@ -1,0 +1,95 @@
+﻿@model EmployeeManagement.Models.Employee
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+<h4>Employee</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="EmployeeId" />
+
+            <!-- Employee Name -->
+            <div class="form-group">
+                <label asp-for="EmployeeName" class="control-label"></label>
+                <input asp-for="EmployeeName" class="form-control" />
+                <span asp-validation-for="EmployeeName" class="text-danger"></span>
+            </div>
+
+            <!-- Gender -->
+            <div class="form-group">
+                <label class="control-label">Gender</label><br />
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="Gender" value="true" id="genderMale"
+                    @(Model.Gender == true ? "checked" : "") />
+                    <label class="form-check-label" for="genderMale">Male</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="Gender" value="false" id="genderFemale"
+                    @(Model.Gender == false ? "checked" : "") />
+                    <label class="form-check-label" for="genderFemale">Female</label>
+                </div>
+                <span asp-validation-for="Gender" class="text-danger"></span>
+            </div>
+
+
+            <!-- Email -->
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <!-- Phone -->
+            <div class="form-group">
+                <label asp-for="Phone" class="control-label"></label>
+                <input asp-for="Phone" class="form-control" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+
+            <!-- Current Photo -->
+            <div class="form-group">
+                <label>Current Photo</label><br />
+                @if (!string.IsNullOrEmpty(Model.PhotoImagePath))
+                {
+                    <img src="@Model.PhotoImagePath" width="120" height="120" class="img-thumbnail" />
+                }
+                else
+                {
+                    <p>No image available</p>
+                }
+            </div>
+
+            <!-- Upload New Photo -->
+            <div class="form-group">
+                <label asp-for="Photo" class="control-label">Upload New Photo</label>
+                <input asp-for="Photo" type="file" class="form-control" accept=".jpg,.jpeg,.png" />
+                <span asp-validation-for="Photo" class="text-danger"></span>
+            </div>
+
+            <!-- Department -->
+            <div class="form-group">
+                <label asp-for="DepartmentId" class="control-label"></label>
+                <select asp-for="DepartmentId" class="form-control" asp-items="ViewBag.DepartmentId">
+                    <option value="">-- Select Department --</option>
+                </select>
+                <span asp-validation-for="DepartmentId" class="text-danger"></span>
+            </div>
+
+            <!-- Buttons -->
+            <div class="form-group mt-3">
+                <input type="submit" value="Save" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
